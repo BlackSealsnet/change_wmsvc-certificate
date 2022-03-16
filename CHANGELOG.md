@@ -1,7 +1,7 @@
 set_folder-icon Changelog
 ================
 
-_This list shows the main changes. For a much more detailed list, simply refer to [commit messages](https://github.com/BlackSealsnet/set_folder-icon/commits/main)._
+_This list shows the main changes. For a much more detailed list, simply refer to [commit messages](https://github.com/BlackSealsnet/change_wmsvc-certificate/commits/main)._
 
 1.3
 -----
