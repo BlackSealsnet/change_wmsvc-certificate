@@ -2,8 +2,8 @@
 #Example: .\change_wmsvc-certificate.ps1 Liste.txt "C:\privat.pfx" cert_password
 
 #Variablen
-$script:ver = "1.3"
-$script:verdate = "11.02.2021"
+$script:ver = "1.4"
+$script:verdate = "17.03.2022"
 
 $script:listname = $Args[0]
 $script:pfxfile = $Args[1]
@@ -18,7 +18,7 @@ Write-Output "==================================================================
 Write-Output "Change WMSvc Certificate Script Ver. $ver, $verdate"
 Write-Output "Written by Andyt for face of buildings planning stimakovits GmbH"
 Write-Output "Promoted development by BlackSeals.net Technology"
-Write-Output "Copyright 2017-2021 by Reisenhofer Andreas"
+Write-Output "Copyright 2017-2022 by Reisenhofer Andreas"
 Write-Output "=========================================================================="
 Write-Output "Gestartet am $startdate um $starttime Uhr..."
 Write-Output ""
@@ -60,6 +60,10 @@ if (($checkpathlist -eq "True") -and ($checkpathpfx -eq "True")) {
 	$pfxfile = ((Get-Item $pfxfile ).Name)
 	Invoke-Command -Session $sessions {param($spfxkey=$pfxkey, $spfxfile=$pfxfile) certutil -f -p $spfxkey -importpfx C:\$spfxfile} -ArgumentList $pfxkey,$pfxfile
 	(get-content $listname) | Foreach-Object {Remove-Item -Path "\\$_\c$\$pfxfile"}
+	
+	#Prüfen ob IS-Powershell Modul installiert ist und bei Bedarf installieren
+	Invoke-Command –Session $Sessions -ScriptBlock {$checkwindowsfeature = Get-WindowsFeature | where {$_.Name -like "Web-Scripting-Tools"}}
+	Invoke-Command –Session $Sessions -ScriptBlock {if ($checkwindowsfeature.InstallState -eq "Available") {Add-WindowsFeature Web-Scripting-Tools}}
 	
 	#Lade IIS-Powershell Modul
 	Invoke-Command -Session $sessions {Import-Module WebAdministration}
