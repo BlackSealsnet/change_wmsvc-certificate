@@ -2,7 +2,7 @@
 #Example: .\change_wmsvc-certificate.ps1 Liste.txt "C:\privat.pfx" cert_password
 
 #Variablen
-$script:ver = "1.4"
+$script:ver = "1.4.1"
 $script:verdate = "17.03.2022"
 
 $script:listname = $Args[0]
@@ -61,7 +61,7 @@ if (($checkpathlist -eq "True") -and ($checkpathpfx -eq "True")) {
 	Invoke-Command -Session $sessions {param($spfxkey=$pfxkey, $spfxfile=$pfxfile) certutil -f -p $spfxkey -importpfx C:\$spfxfile} -ArgumentList $pfxkey,$pfxfile
 	(get-content $listname) | Foreach-Object {Remove-Item -Path "\\$_\c$\$pfxfile"}
 	
-	#Prüfen ob IS-Powershell Modul installiert ist und bei Bedarf installieren
+	#Prüfen ob IIS-Powershell Modul installiert ist und bei Bedarf installieren
 	Invoke-Command –Session $Sessions -ScriptBlock {$checkwindowsfeature = Get-WindowsFeature | where {$_.Name -like "Web-Scripting-Tools"}}
 	Invoke-Command –Session $Sessions -ScriptBlock {if ($checkwindowsfeature.InstallState -eq "Available") {Add-WindowsFeature Web-Scripting-Tools}}
 	

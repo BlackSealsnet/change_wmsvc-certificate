@@ -3,6 +3,11 @@ set_folder-icon Changelog
 
 _This list shows the main changes. For a much more detailed list, simply refer to [commit messages](https://github.com/BlackSealsnet/change_wmsvc-certificate/commits/main)._
 
+1.4.1
+-----
+_Date: 17.03.2022_
+- Correction of a minor typo
+
 1.4
 -----
 _Date: 17.03.2022_
